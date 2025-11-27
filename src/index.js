@@ -1,8 +1,9 @@
 const {
   console,
+  core,
   event,
   file,
-  mpv,
+  // mpv,
 } = iina;
 
 const prefix = '/Users/mason/115挂载/学习/字幕';
@@ -23,7 +24,8 @@ event.on("iina.file-loaded", (url) => {
   if (!subPath) return;
 
   // 加载字幕
-  mpv.command('sub-add',[subPath]);
+  // mpv.command('sub-add',[subPath]);
+  core.subtitle.loadTrack(subPath)
 });
 
 
