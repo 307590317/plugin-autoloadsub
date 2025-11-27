@@ -23,12 +23,14 @@ event.on("iina.file-loaded", (url) => {
   
   if (!subPath) return;
   console.log('已找到字幕', subPath);
-  console.time('loadSubTitle')
+
   // 加载字幕
   // mpv.command('sub-add',[subPath]);
-
   core.subtitle.loadTrack(subPath)
-  console.timeEnd('loadSubTitle')
+});
+
+event.on("iina.file-started", () => {
+  console.log('开始播放');
 });
 
 

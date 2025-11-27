@@ -1,13 +1,13 @@
 {
   "name": "AutoLoad Subtitle",
   "identifier": "com.mason.autoloadsub",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Automatically load local subtitles when playing HTTP/HTTPS videos via weblink URL.",
   "author": {
     "name": "Mason",
     "email": "15539588217@163.com"
   },
-  "ghVersion": 3,
+  "ghVersion": 4,
   "ghRepo": "307590317/plugin-autoloadsub",
   "entry": "src/index.js",
   "permissions": [
