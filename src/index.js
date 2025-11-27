@@ -1,13 +1,12 @@
 const {
   console,
-  core,
   event,
   file,
-  // mpv,
+  mpv,
 } = iina;
 
-const prefix = '/Users/mason/115挂载/学习/字幕';
-const suffixes = ['srt', 'ass', 'vtt', 'pgs'];
+const prefix = '/Users/mason/影片/字幕';
+const suffixes = ['srt', 'ass'];
 
 event.on("iina.file-loaded", (url) => {
   if (!url) return;
@@ -19,18 +18,11 @@ event.on("iina.file-loaded", (url) => {
 
   // 获取 subtitle 参数
   const subPath = getSubtitlePath(url);
-  console.log('subPath', subPath);
   
   if (!subPath) return;
-  console.log('已找到字幕', subPath);
 
   // 加载字幕
-  // mpv.command('sub-add',[subPath]);
-  core.subtitle.loadTrack(subPath)
-});
-
-event.on("iina.file-started", () => {
-  console.log('开始播放');
+  mpv.command('sub-add',[subPath]);
 });
 
 
