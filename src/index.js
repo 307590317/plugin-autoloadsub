@@ -5,7 +5,7 @@ const {
   mpv,
 } = iina;
 
-const prefix = '/Users/mason/影片/字幕';
+const prefix = '/Users/mason/movies/subTitle';
 const suffixes = ['srt', 'ass'];
 
 event.on("iina.file-loaded", (url) => {
@@ -33,9 +33,11 @@ function getSubtitlePath(url) {
   const name = url.split("&name=")[1];
   if (!name) return null;
   const decodeSubName = decodeURIComponent(name);
-  const suffix = suffixes.find(item =>
-    file.exists(`${prefix}/${decodeSubName}.${item}`)
-  );
+  const suffix = suffixes.find(item =>{
+    const res = file.exists(`${prefix}/${decodeSubName}.${item}`);
+    console.log(`${prefix}/${decodeSubName}.${item}`,res);
+    return res
+  });
 
   return suffix && `${prefix}/${decodeSubName}.${suffix}`;
 }
