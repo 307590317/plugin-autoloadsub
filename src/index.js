@@ -1,12 +1,9 @@
 const {
   console,
   event,
-  file,
   mpv,
 } = iina;
 
-const prefix = '/Users/mason/movies/subTitle';
-const suffixes = ['srt', 'ass'];
 
 event.on("iina.file-loaded", (url) => {
   if (!url) return;
@@ -17,30 +14,17 @@ event.on("iina.file-loaded", (url) => {
   }
 
   // 获取 subtitle 参数
-  const subPath = getSubtitlePath(url);
-  console.log('subPath', subPath);
-  
-  if (!subPath) return;
+  const subPath = url.split("&subPath=")[1];
+  if (!subPath) return null;
+  const decodeSubPath= decodeURIComponent(subPath);
+  console.log('subPath', { subPath, decodeSubPath });
 
   // 加载字幕
-  mpv.command('sub-add',[subPath]);
+  try {
+    mpv.command('sub-add',[decodeSubPath]);
+  } catch (error) {
+    console.log('Not found subTitle');
+  }
 });
-
-
-
-// 从 URL 中解析 subTitle
-function getSubtitlePath(url) {
-  const name = url.split("&name=")[1];
-  if (!name) return null;
-  const decodeSubName = decodeURIComponent(name);
-  const suffix = suffixes.find(item =>{
-    const res = file.exists(`${prefix}/${decodeSubName}.${item}`);
-    console.log(`${prefix}/${decodeSubName}.${item}`,res);
-    return res
-  });
-
-  return suffix && `${prefix}/${decodeSubName}.${suffix}`;
-}
-
 
 
