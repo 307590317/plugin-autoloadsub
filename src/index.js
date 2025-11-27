@@ -18,6 +18,7 @@ event.on("iina.file-loaded", (url) => {
 
   // 获取 subtitle 参数
   const subPath = getSubtitlePath(url);
+  console.log('subPath', subPath);
   
   if (!subPath) return;
 
