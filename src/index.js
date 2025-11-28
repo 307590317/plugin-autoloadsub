@@ -1,30 +1,30 @@
 const {
   console,
-  event,
+  event:IINAEvent,
+  file,
+  core,
   mpv,
 } = iina;
 
+let subTitles = []
+const subDirPath = '/Users/mason/movies/subTitle'
 
-event.on("iina.file-loaded", (url) => {
+IINAEvent.on('iina.window-loaded', ()=>{
+  subTitles = file.list(subDirPath).map(item => ({name:item.filename.slice(0, -4),filename:item.filename}))
+})
+
+IINAEvent.on("iina.file-loaded", (url) => {
+  console.log('url', url);
+  
   if (!url) return;
-
-  // 只处理 http/https 视频
-  if (!url.startsWith("http://") && !url.startsWith("https://")) {
-    return;
-  }
-
-  // 获取 subtitle 参数
-  const subPath = url.split("&subPath=")[1];
-  if (!subPath) return null;
-  const decodeSubPath= decodeURIComponent(subPath);
-  console.log('subPath', { subPath, decodeSubPath });
-
+  const title = url.split("&title=")[1];
+  
+  if (!title) return null;
+  const decodeTitle = decodeURIComponent(title);
+  const subItem = subTitles.find(item =>item.name === decodeTitle)
+  if(!subItem) return;
   // 加载字幕
-  try {
-    mpv.command('sub-add',[decodeSubPath]);
-  } catch (error) {
-    console.log('Not found subTitle');
-  }
+  mpv.command('sub-add',[`${subDirPath}/${subItem.filename}`]);
 });
 
 
