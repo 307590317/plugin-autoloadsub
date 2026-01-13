@@ -1,5 +1,4 @@
 const {
-  console,
   event:IINAEvent,
   file,
   core,
@@ -14,14 +13,12 @@ IINAEvent.on('iina.window-loaded', ()=>{
 })
 
 IINAEvent.on("iina.file-loaded", (url) => {
-  console.log('url', url);
-  
   if (!url) return;
   const title = url.split("&title=")[1];
   
   if (!title) return null;
-  const decodeTitle = decodeURIComponent(title);
-  const subItem = subTitles.find(item =>item.name === decodeTitle)
+  const decodeTitle = decodeURIComponent(title).toLowerCase();
+  const subItem = subTitles.find(item =>item.name.toLowerCase() === decodeTitle)
   if(!subItem) return;
   // 加载字幕
   mpv.command('sub-add',[`${subDirPath}/${subItem.filename}`]);
