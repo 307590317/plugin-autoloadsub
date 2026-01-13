@@ -9,7 +9,7 @@ let subTitles = []
 const subDirPath = '/Users/mason/movies/subTitle'
 
 IINAEvent.on('iina.window-loaded', ()=>{
-  subTitles = file.list(subDirPath).map(item => ({name:item.filename.slice(0, -4),filename:item.filename}))
+  subTitles = file.list(subDirPath).map(item => ({name:item.filename.slice(0, -4).toLowerCase(),filename:item.filename}))
 })
 
 IINAEvent.on("iina.file-loaded", (url) => {
@@ -18,7 +18,9 @@ IINAEvent.on("iina.file-loaded", (url) => {
   
   if (!title) return null;
   const decodeTitle = decodeURIComponent(title).toLowerCase();
-  const subItem = subTitles.find(item =>item.name.toLowerCase() === decodeTitle)
+  const match = decodeTitle.match(/^[A-Z0-9]+-\d+/i)
+  const matchUnit = match ? match[0] : decodeTitle;
+  const subItem = subTitles.find(item =>item.name === matchUnit)
   if(!subItem) return;
   // 加载字幕
   mpv.command('sub-add',[`${subDirPath}/${subItem.filename}`]);
