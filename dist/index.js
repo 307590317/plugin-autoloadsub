@@ -1,0 +1,2 @@
+!function(){var n=iina.event,i=iina.file,e=(iina.core,iina.mpv),a=[],o="/Users/mason/movies/subTitle";n.on("iina.window-loaded",function(){a=i.list(o).map(function(n){return{name:n.filename.slice(0,-4),filename:n.filename}})}),n.on("iina.file-loaded",function(n){if(n){var i=n.split("&title=")[1];if(!i)return null;var t=decodeURIComponent(i).toLowerCase(),l=a.find(function(n){return n.name.toLowerCase()===t});l&&e.command("sub-add",[`${o}/${l.filename}`])}})}();
+//# sourceMappingURL=index.js.map

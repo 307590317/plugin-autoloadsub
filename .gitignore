@@ -125,4 +125,3 @@ out
 *.css.map
 package-lock.json
 pnpm-lock.yaml
-dist/
